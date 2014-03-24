@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %} 
+
+{% block title %}{% trans 'Sign in' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-6 col-lg-offset-4">
+        <form action="{% url 'user-sign-in' %}" method="post">
+        {% csrf_token %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>{% trans 'Sign in' %}</h2>
+            </div>
+            <div class="panel-body">
+                {% bootstrap_form form %}
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-warning">
+                    {% trans 'Sign in' %}
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

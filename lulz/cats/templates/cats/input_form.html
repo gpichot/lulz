@@ -1,0 +1,29 @@
+{% load i18n %}
+<form action="{{ next_url }}" method="post">
+    {% csrf_token %}
+    {{ form.errors }}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="input-group">
+                {{ form.message }}
+                {{ form.url }}
+                {{ form.parent }}
+                {{ form.tags }}
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-large btn-info">
+                        {% trans 'Post' %}
+                    </button>
+                </div>
+            </div>
+            <div class="tags">
+            </div>
+        </div>
+        <div class="hidden post panel-body post-media">
+            <div class="thumbnail">
+                <img src="" />
+            </div>
+            <h4 class="title"></h4>
+            <p class="description"></p>
+        </div>
+    </div>
+</form>

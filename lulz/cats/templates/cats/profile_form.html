@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %} 
+
+{% block title %}{% trans 'Edit followed chans' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10">
+        <form action="{% url 'user-followed-chans' %}" method="post">
+        {% csrf_token %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>{% trans 'Group Creation' %}</h2>
+            </div>
+            <div class="panel-body">
+                {% bootstrap_form form %}
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-warning">
+                    {% trans 'Save' %}
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
