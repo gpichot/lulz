@@ -263,3 +263,10 @@ hr.clearfix {
 .post-box .input-part {
     border-radius: 0px;
 }
+
+.footer {
+    width: 100%;
+    border-top: 1px solid #DDDDDD;
+    padding: 5px;
+    text-align: center;
+}
