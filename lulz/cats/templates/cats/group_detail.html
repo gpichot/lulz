@@ -1,21 +1,21 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ block.super }}@{{ group }}{% endblock %}
+{% load i18n %}
+
+{% block title %}@{{ group }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-        <div class="row">
-            <div class="col-lg-10">
+<h2>
+    {% blocktrans %}Group {{ group }}{% endblocktrans %}
+    <a href="{% url 'group-members' pk=group.pk slug=group.slug %}"><small>{% trans 'Members' %}</small></a>
+</h2>
                 {% url 'group-detail' pk=group.pk as next_url %}
                 {% include 'cats/input_form.html' with form=form next_url=next_url %}
-            </div>
-            <div class="col-lg-2">
                 <ul>
                     {% for member in group.members.all %}
-                    <li><a href="">{{ member.user }}</a></li>
+                    <li><a href="">{{ member }}</a></li>
                     {% endfor %}
                 </ul>
-            </div>
-        </div>
         {% for post in last_posts %}
             {% include 'cats/post_template.html' with post=post %}
         {% endfor %}

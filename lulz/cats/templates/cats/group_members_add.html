@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %} 
+
+{% block title %}{% trans 'Add member' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+        <form action="{% url 'group-member-add' pk=group.pk slug=group.slug %}" method="post">
+        {% csrf_token %}
+            <h2>{% trans 'Add a member' %}</h2>
+                {% bootstrap_form form %}
+                <button type="submit" class="btn btn-warning">
+                    {% trans 'Add' %}
+                </button>
+        </form>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/assets/js/handlebars.js"></script>
+<script type="text/javascript" src="/assets/js/typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        Dajaxice.cats.user_list(function(users) {
+            $('#id_username').typeahead(null, {
+                name: 'users',
+                displayKey: 'username',
+                source: function(query, cb) {
+                    var suggests = [];
+                    for(var i in users) {
+                        if(users[i].username.indexOf(query) != -1) {
+                            suggests.push(users[i]);
+                        }
+                    }
+                    cb(suggests);
+                },
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        '{% trans "Unable to find any user that match the current query" %}',
+                        '</div>',
+                    ].join('\n'),
+                    suggestion: Handlebars.compile(['<p>',
+                        '<strong>{% with username='{{username}}' %}{{ username }}{% endwith %}</strong><br />',
+                        '{% with first_name="{{first_name}}" %}{{ first_name }}{% endwith %} {% with last_name="{{last_name}}" %}{{ last_name }}{% endwith %}',
+                        '</p>'
+                    ].join('\n')),
+                },
+            });
+    }, { pk: {{ group.pk }}, });
+    });
+</script>
+{% endblock %}

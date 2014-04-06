@@ -122,6 +122,8 @@ def strate(url):
             'description': video.description,
             'author': video.author,
             'embed_video': video.get_embed_code(),
+            'strate_name': 'YouTube',
+            'strate_logo': 'youtube.png',
         }
 
     d = detect_input(url)

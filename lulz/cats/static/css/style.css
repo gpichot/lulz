@@ -1,0 +1,265 @@
+/*/
+        <style type="text/css">
+            body {
+                padding-top: 80px;
+            }
+            .post .thumbnail {
+                float: left;
+                margin: 10px;
+                max-height: 100px;
+                overflow: hidden;
+            }
+            .post .thumbnail img {
+                width: 140px;
+            }
+            .datetime {
+                width: 49%;
+                float: left;
+            }
+            .actions {
+                width: 49%;
+                float: right;
+            }
+            .clearfix {
+                clear: both;
+                margin: 0px;
+                visibility: hidden;
+            }
+            .panel-body h3 {
+                margin-top: 0px;
+            }
+            .embed-video {
+                text-align: center;
+            }
+
+            .tt-dropdown-menu {
+                background-color: white;
+                border-radius: 5px;
+                border: 1px solid gray;
+                padding: 7px;
+            }
+            .tt-suggestion {
+                border-bottom: 1px solid #BBBBBB;
+            }
+        </style>
+/*/
+
+
+@font-face {
+    font-family: Prociono;
+    src: url(../fonts/Prociono-Regular-webfont.ttf);
+}
+body {
+    margin: 0px;
+    font-family: Prociono;
+    font-size: 0.9em;
+}
+header {
+    background-color: white;
+    border-bottom: 2px solid green;
+}
+
+input {
+    height: 20px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #DDDDDD;
+    padding: 4px;
+}
+header ul {
+    list-style-type: none;
+    margin: 0px;
+    width: 50%;
+    background-color: #FEFEFE;
+}
+header ul li {
+    display: inline;
+}
+header ul.nav-right {
+    float: right;
+}
+header ul li a {
+    display: inline-block;
+    padding: 8px 5px;
+}
+a {
+    text-decoration: none;
+    color: #1A3554;
+}
+.panel {
+    width: 150px;
+    float: left;
+    margin-left: 30px;
+}
+.menu ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.menu li {
+    padding: 2px 5px;
+    border-bottom: 1px solid #DDDDDD;
+}
+.menu li.divider {
+    padding: 0px;
+}
+
+.content {
+    margin-left: 240px;
+    margin-top: 20px;
+    width: 800px;
+}
+.input-form {
+    margin-bottom: 10px;
+}
+.input-part {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    border-radius: 10px 10px 0px 0px;
+}
+.input-group {
+    padding: 10px;
+}
+.input-group input[type='text'] {
+    width:620px;
+    height: 24px;
+    border-radius: 5px 0px 0px 5px;
+    border: 1px solid gray;
+    padding: 3px;
+}
+.input-group button {
+    height: 32px;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 0px 5px 5px 0px;
+    width:50px;
+    margin-left: -5px;
+}
+.hidden {
+    display: none;
+}
+
+.input-part .tags {
+    padding: 0px 3px 3px 5px;
+}
+.post-suggest {
+    border-bottom: 1px solid #bce8f1;
+    border-right: 1px solid #bce8f1;
+    border-left: 1px solid #bce8f1;
+    border-radius: 0px 0px 5px 5px;
+    padding: 5px;
+}
+.post-suggest .title {
+    margin: 0px;
+    padding: 6px 0px;
+}
+.post-suggest .thumbnail {
+    height: 100px;
+    float: left;
+    margin: 10px 15px 5px 7px;
+}
+
+.post-box {
+    margin:5px 0px;
+    border:1px solid #DEDEDE;
+    border-radius; 3px;
+    width: 600px;
+}
+.post-heading, .post-footer {
+    background-color: #EEEEEE;
+    padding: 3px 4px;
+}
+.post-heading p {
+    margin: 0px;
+    padding: 0px;
+}
+.post-body {
+    overflow: hidden;
+}
+.post-body .thumbnail {
+    height: 140px;
+    width: auto;
+}
+.post-body.post-suggest {
+    border: none;
+}
+.post-body .title {
+    margin-bottom: 6px;
+}
+.post-body .description {
+    margin: 5px;
+    font-size: 0.9em;
+}
+.post-meta {
+    float: right;
+    width: 190px;
+    margin-top: 0px;
+}
+.post-meta-body {
+    padding: 5px;
+}
+hr.clearfix {
+    visibility: hidden;
+    margin: 0px;
+    clear: right;
+    height: 0px;
+    border-width: 0px;
+}
+
+
+.text-muted {
+    color: gray;
+}
+
+
+.tt-dropdown-menu {
+    padding: 5px;
+    background-color: white;
+    border: 1px solid #EDEDED;  
+}
+.tt-suggestion {
+    border-bottom: 1px solid #DDDDDD;
+}
+.tt-suggestion p {
+    margin: 0px;
+}
+.strate-logo {
+    vertical-align: bottom;
+}
+
+.posts .post-box {
+    background-color: #F5EFBD;
+}
+.post-level-1 {
+    margin-left: 40px;
+}
+.post-level-1 .post-content {
+    width: 560px;
+}
+.post-level-2 {
+    margin-left: 80px;
+}
+.post-level-2 .post-content {
+    width: 520px;
+}
+.post-level-3 {
+    margin-left: 120px;
+}
+.post-level-3 .post-content {
+    width: 480px;
+}
+.post .input-group input[type='text'] {
+    width: 500px;
+}
+.post-level-1 .input-group input[type='text'] {
+    width: 460px;
+}
+.post-level-2 .input-group input[type='text'] {
+    width: 420px;
+}
+.post-level-3 .input-group input[type='text'] {
+    width: 380px;
+}
+.post-box .input-part {
+    border-radius: 0px;
+}

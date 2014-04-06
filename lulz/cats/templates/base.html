@@ -3,48 +3,16 @@
 {% load bootstrap3 %}
 <html lang="en">
     <head>
-        {% load bootstrap_themes %}
+        <!--{% load bootstrap_themes %}
         {% bootstrap_styles theme='united' type='min.css' %}
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        -->
+        <link rel="stylesheet" href="/assets/css/style.css">
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <style type="text/css">
-            body {
-                padding-top: 80px;
-            }
-            .post .thumbnail {
-                float: left;
-                margin: 10px;
-                max-height: 100px;
-                overflow: hidden;
-            }
-            .post .thumbnail img {
-                width: 140px;
-            }
-            .datetime {
-                width: 49%;
-                float: left;
-            }
-            .actions {
-                width: 49%;
-                float: right;
-            }
-            .clearfix {
-                clear: both;
-                margin: 0px;
-                visibility: hidden;
-            }
-            .panel-body h3 {
-                margin-top: 0px;
-            }
-            .embed-video {
-                text-align: center;
-            }
-
-        </style>
         <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
         <title>{% block title %}Lulz{% endblock %}</title>
@@ -52,93 +20,59 @@
     </head>
 
     <body role="document">
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">{% trans 'Toggle navigation' %}</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">Lulz</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
-                        <li><a href="{% url 'hot' %}">{% trans 'Hot' %}</a></li>
-                        <li><a href="{% url 'trending' %}">{% trans 'Trending' %}</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if not user.is_authenticated %}
-                        <li><a href="{% url 'user-sign-in' %}">{% trans 'Sign in' %}</a></li>
-                        <li><a href="{% url 'user-sign-up' %}">{% trans 'Sign up' %}</a></li>
-                        {% else %}
-                        <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {% trans 'Settings' %}
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a href="{% url 'user-log-out' %}">{% trans 'Log out' %}</a></li>
-                        </ul>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </div>
+        <header>
+            <ul class="nav-right">
+                {% if not user.is_authenticated %}
+                <li><a href="{% url 'user-sign-in' %}">{% trans 'Sign in' %}</a></li>
+                <li><a href="{% url 'user-sign-up' %}">{% trans 'Sign up' %}</a></li>
+                {% else %}
+                <li><a href="#">Profile</a></li>
+                <li><a href="{% url 'user-log-out' %}">{% trans 'Log out' %}</a></li>
+                {% endif %}
+            </ul>
+            <ul>
+                <li class="brand"><a href="#">Lulz</a></li>
+                <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                <li><a href="{% url 'hot' %}">{% trans 'Hot' %}</a></li>
+                <li><a href="{% url 'trending' %}">{% trans 'Trending' %}</a></li>
+            </ul>
+        </header>
 
         <div class="container">
-            <div class="row">
-                {{ bootstrap_messages }}
+                {% for message in messages %}
+                <p class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </p>
+                {% endfor %}
                 {% if user.is_authenticated %}
-                <div class="col-lg-2">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            {% trans 'Groups' %}
-                        </div>
-                        <div class="panel-body">
-                            <div class="btn-group-vertical">
-                                {% for group in user.groups.all %}
-                                <a href="{% url 'group-detail' pk=group.pk %}" class="btn btn-sm btn-info">{{ group }}</a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="panel-footer text-right">
-                            <a href="{% url 'group-create' %}" class="btn btn-success btn-sm">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                {% trans 'Create a group' %}
-                            </a>
-                        </div>
+                <div class="panel">
+                    <div class="menu">
+                        <h3>{% trans 'Groups' %}</h3>
+                        <ul>
+                            {% for group in user.groups.all %}
+                            <li><a href="{{ group.get_absolute_url }}">{{ group }}</a></li>
+                            {% endfor %}
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{% url 'group-create' %}">{% trans 'Create a group' %}</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            {% trans 'Channels' %}
-                        </div>
-                        <div class="panel-body">
-                                {% for channel in user.profile.followed_tags.all %}
-                                <a href="{% url 'tag' tag=channel %}">#{{ channel }}</a>
-                                {% endfor %}
-
-                        </div>
-                        <div class="panel-footer text-right">
-                            <a href="{% url 'user-followed-chans' %}" class="btn btn-success btn-sm">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                {% trans 'Edit followed chans' %}
-                            </a>
-                        </div>
+                    <div class="menu">
+                        <h3>{% trans 'Channels' %}</h3>
+                        <ul>
+                            {% for channel in user.followed_tags.all %}
+                            <li><a href="{% url 'tag' tag=channel %}">#{{ channel }}</a></li>
+                            {% endfor %}
+                            <li class="divider"></li>
+                            <li><a href="{% url 'user-followed-chans' %}">{% trans 'Add chan' %}</a></li>
+                        </ul>
                     </div>
                 </div>
                 {% endif %}
-                <div class="col-lg-10">
-                    <div class="container-fluid">
+                <div class="content">
                     {% block content %}
                     {% endblock %}
-                    </div>
                 </div>
             </div>
         </div>
@@ -150,31 +84,32 @@
         <script type="text/javascript">
             function refresh_vote(data) {
                 console.log(data);
-                var item = 'button.vote[data-pk=' + data.pk + ']'
+                var item = '.vote[data-pk=' + data.pk + ']'
                 $(item).parent().find('.likes').text(data.likes);
             }
             $('.answer-add').click(function() {
-                var container = $(this).parents('.infos');
-                var answer = container.siblings('.answer');
+                var container = $(this).parents('.post');
+                var answer = container.find('.answer');
                 answer.find('[name="parent"]').val($(this).attr('data-pk'));
                 answer.removeClass('hidden');
-                container.slideUp();
+                //container.slideUp();
                 answer.slideDown();
                 return false;
             });
             function show_suggestion(data, context) {
                 if(data.type == 'video' || data.type == 'image') {
+                    console.log(context);
                     if(data.description.length > 200) {
                         data.description = data.description.substring(0, 200) + '...';
                     }
-                    var prop = context.parentsUntil('form').find('.post-media');
+                    var prop = context.parents('form').find('.post-suggest');
                     prop.find('.title').text(data.title);
-                    prop.find('.thumbnail img').attr('src', data.thumbnail);
+                    prop.find('.thumbnail').attr('src', data.thumbnail);
                     prop.find('.description').html(data.description);
                     prop.hide();
                     prop.removeClass('hidden');
                     prop.slideDown();
-                    context.siblings('[name=url]').val(context.val().trim());
+                    context.parents('form').find('.post-url').val(context.val().trim());
                     context.val('');
                 }
             }
@@ -198,17 +133,18 @@
                         }, {
                             url: $(this).val().trim(),
                         })
-                } else if(event.keyCode == 32) {
+                } else if(event.keyCode == 32 || event.keyCode == 13) {
                     var input = context.val();
-                    input = input.substring(0, input.length - 1);
+                    var mod = event.keyCode == 13 ? 0 : -1;
+                    input = input.substring(0, input.length + mod);
                     var item = input.substring(input.lastIndexOf(' ') + 1);
                     var reg = new RegExp('^#([a-z0-9\-]+)$', 'gi');
                     if(item.match(reg)) {
                         var bits = reg.exec(item);
-                        context.parentsUntil('.panel').find('.tags').append(
+                        context.parents('form').find('.tags').append(
                             '&nbsp<a href="" title="{% trans 'Delete '%}" class="tag" data-tag="' + bits[1] + '">' + bits[0] + '</a>'
                         );
-                        var tags_input = context.parentsUntil('.panel').find('.post-tags');
+                        var tags_input = context.parents('form').find('.post-tags');
                         tags_input.val((tags_input.val() + ' ' + bits[1]).trim());
                         input = input.substring(0, input.lastIndexOf(' ') + 1);
                         context.val(input);
@@ -227,6 +163,9 @@
                 });
             });
         </script>
+        {% block javascript %}
+
+        {% endblock %}
 
     </body>
 </html>

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Post' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+
+{% include 'cats/post_template.html' with post=post answer_form=form %}
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

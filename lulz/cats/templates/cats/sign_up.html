@@ -6,27 +6,61 @@
 {% block title %}{% trans 'Sign up' %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-6 col-lg-offset-4">
         <form action="{% url 'user-sign-up' %}" method="post">
         {% csrf_token %}
-        <div class="panel panel-info">
-            <div class="panel-heading">
                 <h2>{% trans 'Sign up' %}</h2>
-            </div>
-            <div class="panel-body">
                 {{ form.errors }}
-                {{ form|crispy }}
-            </div>
-            <div class="panel-footer text-right">
-                <button type="submit" class="btn btn-warning">
+                <table>
+                    <tr>
+                        <td>
+                            {{ form.username.label }}
+                        </td>
+                        <td>
+                            {{ form.username }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.first_name.label }}
+                        </td>
+                        <td>
+                            {{ form.first_name }}
+                        </td>
+                        <td>
+                            {{ form.last_name.label }}
+                        </td>
+                        <td>
+                            {{ form.last_name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.email.label }}
+                        </td>
+                        <td>
+                            {{ form.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.password1.label }}
+                        </td>
+                        <td>
+                            {{ form.password1 }}
+                        </td>
+                        <td>
+                            {{ form.password2.label }}
+                        </td>
+                        <td>
+                            {{ form.password2 }}
+                        </td>
+                    </tr>  
+                </table>
+
+                <button type="submit">
                     {% trans 'Sign up' %}
                 </button>
-            </div>
-        </div>
         </form>
-    </div>
-</div>
 
 
 {% endblock %}

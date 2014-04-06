@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %} 
+
+{% block title %}{% trans 'Add chan' %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10">
+        <form action="{% url 'user-followed-chans' %}" method="post">
+        {% csrf_token %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2>{% trans 'Group Creation' %}</h2>
+            </div>
+            <div class="panel-body">
+                {% bootstrap_form form %}
+            </div>
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-warning">
+                    {% trans 'Save' %}
+                </button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/assets/js/handlebars.js"></script>
+<script type="text/javascript" src="/assets/js/typeahead.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        Dajaxice.cats.chan_list(function(chans) {
+            $('#id_chan').typeahead(null, {
+                name: 'chans',
+                displayKey: 'name',
+                source: function(query, cb) {
+                    var suggests = [];
+                    for(var i in chans) {
+                        if(chans[i].name.indexOf(query) != -1) {
+                            suggests.push(chans[i]);
+                        }
+                    }
+                    cb(suggests);
+                },
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        '{% trans "Unable to find any chan that match the current query" %}',
+                        '</div>',
+                    ].join('\n'),
+                    suggestion: Handlebars.compile(['<p>',
+                        '<strong>{% with name='{{name}}' %}{{ name }}{% endwith %}</strong><br />',
+                        '{% blocktrans with followers='{{nb_followers}}' %}{{ followers }} followers{% endblocktrans %}',
+                        '- {% blocktrans with posts='{{references}}' %}{{ posts }} related posts{% endblocktrans %}',
+                        '</p>'
+                    ].join('\n')),
+                },
+            });
+        });
+    });
+</script>
+{% endblock %}

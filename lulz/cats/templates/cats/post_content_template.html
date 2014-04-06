@@ -1,0 +1,58 @@
+{% load i18n %}
+{% load cache %}
+<div class="post-meta post-box">
+    <div class="likes-heading post-heading">
+        <span class="likes">{{ post.likes }}</span> {% trans 'likes' %} 
+        <a href="#" class="vote upvote" data-pk="{{ post.pk }}">{% trans 'Up' %}</a>
+        <a href="#" class="vote downvote" data-pk="{{ post.pk }}">{% trans 'Down' %}</a>
+    </div>
+    <div class="post-meta-body">
+        {{ post.answers_count }}
+        {% trans 'comments' %}
+        <a href="{{ post.get_absolute_url }}" class="answer-add" data-pk="{{ post.pk }}">
+            {% trans 'Comment' %}
+        </a>
+    </div>
+</div>
+<div class="post-box post-content">
+    <div class="post-heading">
+        {% load pussies %}
+        {% if post.message != '' %}<p>{{ post.message|parse_links }}</p>{% endif %}
+        {% url 'user-detail' user=post.author as profile_url %}
+        <a href="{{ profile_url }}">{{ post.author }}</a>{% if post.group != None %}<a href="{{ post.get_absolute_url }}">@{{ post.group }}</a>{% endif %}
+        <span title="{{ post.posted_at }}" class="text-muted">
+            {% blocktrans with post.posted_at|timesince  as time %}{{ time }} ago{% endblocktrans %}
+        </span>
+    </div>
+    <div class="post-footer">
+        {% for tag in post.tags.all %}
+        <a href="{% url 'tag' tag=tag %}">#{{ tag }}</a>
+        {% endfor %}
+    </div>
+    {% cache 99999 post-message post.pk %}
+    {% if post.url != '' %}
+    <div class="post-body post-suggest">
+        {% if post.metadata.type == 'video' %}
+        <div class="hidden embed-video">
+            {% autoescape off %}
+            {{ post.metadata.embed_video }}
+            {% endautoescape %}
+        </div>
+        {% endif %}
+        <img src="{{ post.metadata.thumbnail }}" class="thumbnail" />
+        <h4 class="title">
+            <a href="{{ post.url }}">
+                {% if post.metadata.strate_logo != None %}
+                <img src="/assets/images/strates/logos/{{ post.metadata.strate_logo }}" height="20px" class="strate-logo" />
+                {% endif %}
+                {{ post.metadata.title }}
+            </a>
+        </h4>
+        <p class="description">{% autoescape off %}{{ post.metadata.description|truncatechars:400 }}{% endautoescape %}</p>
+    </div>
+    {% endif %}
+    {% endcache %}
+    <div class="hidden answer">
+        {% include 'cats/input_form.html' with form=answer_form %}
+    </div>
+</div>
