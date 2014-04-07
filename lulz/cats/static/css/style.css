@@ -269,4 +269,6 @@ hr.clearfix {
     border-top: 1px solid #DDDDDD;
     padding: 5px;
     text-align: center;
+    margin-top: 20px;
+    clear: both;
 }
