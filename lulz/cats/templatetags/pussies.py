@@ -13,7 +13,7 @@ def parse_links(text):
     text = text.replace('<', '&lt')
     text = text.replace('>', '&gt')
     text = text.replace('"', '&quot;')
-    text = re.sub(r'((http|ftp)s?://\S+)', r'<a href="\1">[%s]</a>', text)
-    text = text % _('Link')
+    text = re.sub(r'((http|ftp)s?://\S+)', r'<a href="\1">[{0}]</a>', text)
+    text = text.format(_('Link'))
 
     return mark_safe(text)
