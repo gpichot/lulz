@@ -82,7 +82,7 @@
     {% endfor %}
     {% if post.get_descendant_count > 2 %}
     <p class="post-disclaimer">
-    <a href="{ % url post.get_absolute_url %}">{% trans 'Show all comments' %}</a>
+    <a href="{{ post.get_absolute_url }}">{% trans 'Show all comments' %}</a>
     </p>
     {% endif %}
 
