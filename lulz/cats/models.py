@@ -107,6 +107,9 @@ class Post(MPTTModel):
     def has_template(self):
         return self.url is not None
 
+    def get_famous_posts(self):
+        return self.get_descendants().order_by('-likes', 'posted_at')[:2]
+
     @cached_property
     def metadata(self):
         return self.get_metadata()

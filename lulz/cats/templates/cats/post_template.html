@@ -8,7 +8,7 @@
             <a href="#" class="vote downvote" data-pk="{{ post.pk }}">{% trans 'Down' %}</a>
         </div>
         <div class="post-meta-body">
-            {{ post.answers_count }}
+            {{ post.get_descendant_count }}
             {% trans 'comments' %}
             <a href="{{ post.get_absolute_url }}" class="answer-add" data-pk="{{ post.pk }}">
                 {% trans 'Comment' %}
@@ -64,6 +64,7 @@
 </div>
 <div class="posts">
     {% load mptt_tags %}
+    {% if only_famous_posts == None %}
     {% recursetree post.get_descendants %}
     <div class="post post-level-{{ node.level }}">
         {% include 'cats/post_content_template.html' with post=node %}
@@ -71,5 +72,20 @@
     <hr class="clearfix" />
     {{ children }}
     {% endrecursetree %}
+    {% else %}
+    {% for answer in post.get_famous_posts %}
+    <div class="post-divider">...</div>
+    <div class="post post-level-{{ answer.level }}">
+        {% include 'cats/post_content_template.html' with post=answer %}
+    </div>
+    <hr class="clearfix" />
+    {% endfor %}
+    {% if post.get_descendant_count > 2 %}
+    <p class="post-disclaimer">
+    <a href="{ % url post.get_absolute_url %}">{% trans 'Show all comments' %}</a>
+    </p>
+    {% endif %}
+
+    {% endif %}
 
 </div>

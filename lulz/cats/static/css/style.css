@@ -272,3 +272,15 @@ hr.clearfix {
     margin-top: 20px;
     clear: both;
 }
+.post-divider {
+    width: 600px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}   
+.post-disclaimer {
+    width: 600px;
+    text-align: center;
+    border-bottom: 1px solid #DEDEDE;
+    margin-bottom: 30px;
+}

@@ -7,11 +7,13 @@
         <a href="#" class="vote downvote" data-pk="{{ post.pk }}">{% trans 'Down' %}</a>
     </div>
     <div class="post-meta-body">
-        {{ post.answers_count }}
+        {{ post.get_descendant_count }}
         {% trans 'comments' %}
+        {% if post.level < 3 %}
         <a href="{{ post.get_absolute_url }}" class="answer-add" data-pk="{{ post.pk }}">
             {% trans 'Comment' %}
         </a>
+        {% endif %}
     </div>
 </div>
 <div class="post-box post-content">
@@ -52,7 +54,9 @@
     </div>
     {% endif %}
     {% endcache %}
+    {% if post.level < 3 %}
     <div class="hidden answer">
         {% include 'cats/input_form.html' with form=answer_form %}
     </div>
+    {% endif %}
 </div>
