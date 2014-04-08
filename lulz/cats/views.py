@@ -37,7 +37,9 @@ class PostListAndCreateView(generic.CreateView):
         return super(PostListAndCreateView, self).form_valid(form)
 
     def get_post_queryset(self):
-        return Post.objects.filter(parent=None).order_by('-posted_at').select_related('author').prefetch_related('tags').annotate(answers_count=Count('answers'))
+        return Post.objects.filter(parent=None).order_by('-posted_at').select_related('author').prefetch_related('tags').annotate(
+            answers_count=Count('answers')
+        )
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostListAndCreateView, self).get_context_data(*args, **kwargs)
@@ -64,6 +66,8 @@ class Home(PostListAndCreateView):
                 Q(group__members=self.request.user)
                 | Q(group=None)
             )
+        else:
+            qs = qs.filter(Q(group=None))
 
         return qs
 
