@@ -198,12 +198,17 @@ a {
 .post-meta-body {
     padding: 5px;
 }
-hr.clearfix {
+.clearfix, .clearfix-all {
     visibility: hidden;
     margin: 0px;
-    clear: right;
     height: 0px;
     border-width: 0px;
+}    
+hr.clearfix {
+    clear: right;
+}
+.clearfix-all {
+    clear: both;
 }
 
 
