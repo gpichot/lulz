@@ -52,7 +52,7 @@ class IMDB(Detecter):
             'thumbnail': soup.find('meta', {'property': 'og:image', })['content'],
             'title': soup.find('meta', {'property': 'og:title', })['content'],
             'description': soup.find('meta', {'property': 'og:description'})['content'],
-            'author': soup.find('div', {'itemprop': 'director'}).a.span.content,
+            'author': '',#soup.find('div', {'itemprop': 'director'}).a.span.content,
             'strate_name': 'IMDB',
             'strate_logo': 'imdb.png',
         }
