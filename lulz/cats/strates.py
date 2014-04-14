@@ -75,6 +75,23 @@ class TheMovieDB(Detecter):
         }
 
 
+class TheMovieDBTv(Detecter):
+    re_detect = re.compile(r'^(http(s)?://(www\.)?)?themoviedb\.org/tv/.*/season/\d+/episode/\d+', re.I)
+
+    def get(self):
+        soup = BeautifulSoup(urllib.urlopen(self.url).read())
+
+        return {
+            'type': 'image',
+            'thumbnail': soup.find('img', {'class': 'lightbox', })['src'],
+            'title': soup.find('h2', {'id': 'title', }).findAll('a')[1].text,
+            'description': soup.find('div', {'id': 'mainCol'}).findAll('p')[1].text,
+            'author': '',#soup.find('div', {'itemprop': 'director'}).a.span.content,
+            'strate_name': 'TheMovieDB',
+            'strate_logo': '',
+        }
+
+
 class DailyMotion(Detecter):
     re_detect = re.compile(r'^(http(s)?://(www\.)?)?dailymotion\.com/video/.*', re.I)
     re_code = re.compile(r'/video/(?P<code>[a-z0-9]+)_', re.I)
@@ -113,7 +130,7 @@ class NineGag(Detecter):
     
 
 def detect_input(url):
-    detecters = [SimpleImageDetecter, NineGag, DailyMotion, IMDB, TheMovieDB]
+    detecters = [SimpleImageDetecter, NineGag, DailyMotion, IMDB, TheMovieDB, TheMovieDBTv]
 
     for detecter in detecters:
         strate = detecter(url)
