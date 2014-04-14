@@ -102,7 +102,7 @@ class TagView(generic.ListView):
     def get_queryset(self, *args, **kwargs):
         qs = super(TagView, self).get_queryset(*args, **kwargs)
 
-        return qs.filter(parent=None, tags__name__in=[self.kwargs.get('tag')])
+        return qs.filter(parent=None, tags__name__in=[self.kwargs.get('tag')]).order_by('-posted_at')
 
     def get_context_data(self, *args,**kwargs):
         context = super(TagView, self).get_context_data(*args, **kwargs)
